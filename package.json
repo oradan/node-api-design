@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,13 @@
   },
   "homepage": "https://github.com/oradan/node-api-design#readme",
   "dependencies": {
+    "@prisma/client": "^4.8.0",
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "prisma": "^4.8.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   }
 }
