@@ -1,7 +1,8 @@
 import express from 'express';
 import router from './router';
 import morgan from 'morgan';
-import { authCheck } from './modules/auth'
+import { authCheck } from './modules/auth';
+import { createNewUser , authenticateUser} from './handlers/user'
 
 
 
@@ -23,7 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', authCheck, router)  // add auth check middleware for jwt tocken for all api routes 
-
+app.post('/user', createNewUser)
+app.post('/login', authenticateUser)
 
 
 export default app;
