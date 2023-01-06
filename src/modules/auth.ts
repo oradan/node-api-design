@@ -27,11 +27,11 @@ export const authCheck = (req, res, next) => {
 }
 
 export const hashPssword = (password) => {
-    bcrypt.hash(password, 5)
+    return bcrypt.hash(password, 5)
 }
 
 export const comparePasswords = (password, hash) => {
-    bcrypt.compare(password, hash)
+    return bcrypt.compare(password, hash)
 }
 function notAuthorizedHandlerr(res, message) {
     return res.status(401).json({ message })
