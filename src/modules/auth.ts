@@ -20,6 +20,8 @@ export const authCheck = (req, res, next) => {
 
     try {
         const user = jwt.verify(tocken, process.env.JWT_SECTRET);
+        console.log(user)
+        req.user = user;
         next()
     } catch (error) {
         return notAuthorizedHandlerr(res, error)

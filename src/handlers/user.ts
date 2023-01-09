@@ -17,7 +17,7 @@ export const createNewUser = async (req, res) => {
         res.json({ tocken })
 
     } catch (error) {
-
+        res.json({ error })
     }
 }
 
@@ -29,7 +29,7 @@ export const authenticateUser = async (req, res) => {
     const isValidUser = await comparePasswords(req.body.password, user?.password);
 
     if (!isValidUser) {
-        res.status(401).json({message:"the pass does not mach"})
+        res.status(401).json({ message: "the pass does not mach" })
     }
 
     const tocken = createJWT(user);
