@@ -1,4 +1,5 @@
 import { body, validationResult } from 'express-validator'
+import prisma from "../db"
 
 
 export const checkIfExistInBody = (field: string) => {
@@ -11,4 +12,26 @@ export const validateRequest = (req, res, next) => {
         return res.status(401).json(error)
     }
     next()
+}
+
+export const validateProductId = async (req, res, next) => {
+
+    try {
+        const product = await prisma.product.findUnique({
+            where: {
+                id: req.body.productId
+            }
+        })
+
+        if (!product) {
+            return res.status(401).json({ message: "the product id is not valid" })
+        }
+        req.product = product
+        next()
+
+    } catch (error) {
+
+        return res.status(401).json({ message: "Server error" })
+    }
+
 }

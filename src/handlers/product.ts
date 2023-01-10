@@ -5,7 +5,7 @@ export const getProducts = async (req, res) => {
         // get the user that have a property products
         const user = await prisma.user.findUnique({
             where: { id: req.user.id },
-            include: { products: true }
+            include: { products: true}
         })
 
         res.json({ data: user?.products })
@@ -19,7 +19,8 @@ export const getOneProduct = async (req, res) => {
     try {
         //get one product
         const product = await prisma.product.findFirst({
-            where: { id: id, authorId: req.user.id }
+            where: { id: id, authorId: req.user.id },
+            include: { updates: true}
         })
 
         res.status(200).json({ data: product })
