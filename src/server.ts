@@ -2,10 +2,15 @@ import express from 'express';
 import router from './router';
 import morgan from 'morgan';
 import { authCheck } from './modules/auth';
-import { createNewUser , authenticateUser} from './handlers/user'
+import { createNewUser, authenticateUser } from './handlers/user'
 
 
+process.on('uncaughtException', (e)=>console.log(e))
+process.on('unhandledRejection', (e)=> console.log(`This is the error from async ${e}`))
 
+setTimeout(()=>{
+    throw new Error('Oops')
+},100)
 const app = express();
 // this is a custommiddleware that can reveive arguments
 const customMiddleware = (message) => (req, res, next) => {
@@ -27,5 +32,14 @@ app.use('/api', authCheck, router)  // add auth check middleware for jwt tocken 
 app.post('/user', createNewUser)
 app.post('/login', authenticateUser)
 
+app.use((err, req, res, next) => {
+if (err.type === 'auth') {
+    res.status(401).json({message: 'Unauthorized'})
+} else if (err.type === 'input') {
+    res.status(400).json({message: 'Invalid input'})
+} else {
+    res.status(500).json({message:'Oooops that is an server error'})
+}
+})
 
 export default app;
