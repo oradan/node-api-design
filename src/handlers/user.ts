@@ -2,7 +2,7 @@ import prisma from "../db";
 import { comparePasswords, createJWT, hashPssword } from "../modules/auth";
 
 
-export const createNewUser = async (req, res) => {
+export const createNewUser = async (req, res, next) => {
 
     try {
         const user = await prisma.user.create({
@@ -17,7 +17,8 @@ export const createNewUser = async (req, res) => {
         res.json({ tocken })
 
     } catch (error) {
-        res.json({ error })
+        error.type = 'input'
+        next(error)
     }
 }
 
