@@ -12,8 +12,6 @@ setTimeout(()=>{
     throw new Error('Oops')
 },100)
 
-
-
 const app = express();
 // this is a custommiddleware that can reveive arguments
 const customMiddleware = (message) => (req, res, next) => {
